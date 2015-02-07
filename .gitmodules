@@ -1,0 +1,3 @@
+[submodule "lib/pytwitter"]
+	path = lib/pytwitter
+	url = https://github.com/sixohsix/twitter.git
