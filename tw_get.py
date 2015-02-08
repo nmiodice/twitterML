@@ -6,7 +6,10 @@ import re
 sys.path.append("lib/pytwitter/")
 from twitter import *
 
-# Returns only numbers, letters and spaces, converted to lowercase
+"""
+Cleans a string of all non-alpha only words, special characters, and
+links to URLs
+"""
 def clean(string, pattern):
 	# gets rid of random new lines, tabs, etc...
 	string = string.lower()
@@ -15,14 +18,25 @@ def clean(string, pattern):
 	string = ' '.join([w for w in string.split() if not 'http' in w])
 	return string
 
-
+"""
+Returns true if a character is a lowercase letter OR a space OR
+a number
+"""
 def is_not_special_char(c):
 	ascii = ord(c)
 	return ((ascii > 96 and ascii < 122) or 
 		(ascii > 47 and ascii < 58) or
 		ascii == 32)
 
-def get_tweets(n_tweets, delim):
+"""
+Returns a matrix with some data about some number of tweets, specified by 
+N_TWEETS. The data is returned in an N x P matrix, where N = N_TWEETS. The
+tweet features returned are:
+	col 0: latitude of tweet
+	col 1: longitude of tweet
+	col 2: cleaned version of the tweet text
+"""
+def get_tweets(n_tweets):
 	tweets = []
 	query_args = dict()
 	query_args['locations'] = "-80, 40, -69, 48" # New England (ish)
@@ -54,10 +68,12 @@ def get_tweets(n_tweets, delim):
 
 	return np.matrix(tweets)
 
-
+"""
+Prints tweet data to stdout
+"""
 if __name__ == '__main__':
 	if len(sys.argv) != 2:
 		print("Usage: " + sys.argv[0] + " <num tweets>")
 		exit(-1)
-	tweets = get_tweets(int(sys.argv[1]), const.delim)
+	tweets = get_tweets(int(sys.argv[1]))
 	fo.print_matrix(tweets)

@@ -2,7 +2,7 @@ import constants
 import numpy as np
 import sys
 """
-A collection of file utilities for TwitterML
+A collection of file helper functions for TwitterML
 """
 
 """

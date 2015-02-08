@@ -13,6 +13,7 @@ tweet_sentiment="tweet_sentiment.txt"
 # parameters
 n_tweets=10000
 
+# generate output files
 python3 $get_tweets $n_tweets > $tweets
-python3 $get_clusters $tweets > $tweet_clusters
-python3 $get_sentiment $tweet_clusters
+python3 $get_sentiment $tweets > $tweet_sentiment
+python3 $get_clusters $tweet_sentiment > $tweet_clusters

@@ -46,6 +46,11 @@ def cluster_from_file(file, features, delim):
 	x_clus = prune_no_cluster_data(x_clus)
 	return x_clus
 
+"""
+Prints cluster information for the tweet data passed in. Only tweets which
+are assigned a cluster in the DBSCAN algorithm are printed. Tweets are
+clustered based on latitude and longitude data
+"""
 if __name__ == '__main__':
 	if select.select([sys.stdin,],[],[],0.0)[0]:
 	    file = sys.stdin
