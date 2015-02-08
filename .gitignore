@@ -1,1 +1,4 @@
 *.txt
+.DS_Store
+__pycache__/
+lib/.DS_Store
