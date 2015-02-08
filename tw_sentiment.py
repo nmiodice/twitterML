@@ -29,6 +29,12 @@ def analyze(x, text_col, include_zero_polarity):
 	return x
 
 """
+Removes the column specified by TEXT_COL
+"""
+def strip_text(x, txt_col):
+	return np.delete(x, txt_col, axis = 1)
+
+"""
 A wrapper to the ANALYZE function, but reads the data in from a file
 """
 def analyze_file(file, delim, text_col, include_zero_polarity):
@@ -48,4 +54,5 @@ if __name__ == '__main__':
 			assert(file != None)
 	
 	x = analyze_file(file, constants.delim, -1, False)
+	x = strip_text(x, -3)
 	fo.print_matrix(x)
