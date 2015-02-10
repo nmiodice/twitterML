@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAw0e_FoeYsU00AS1QBNmhwa2k__QJWV0">
+    </script>
+    <script type="text/javascript">
+
+      /* initializes a Google map */
+      function initialize() {
+        init_map()
+        colorize_geojson();
+      }
+
+      /* apply coloring based on selected attributes */
+      function colorize_geojson() {
+        window.map.data.setStyle(function(feature) {
+            var col_num;
+            var color;
+            var to_draw = document.getElementById("to_draw").value;
+
+            if (to_draw == 'subjectivity') {
+              col_num = feature.getProperty('subjectivity')
+            } else {
+              col_num = feature.getProperty('polarity');
+            }
+            color = temp_color(col_num)
+            return {
+              fillColor: color,
+              fillOpacity: .6,
+              strokeWeight: 1
+            };
+        });
+      }
+
+      /* initialize a map with geoJSON data */
+      function init_map() {
+        var mapOptions = {
+          center: { lat: 40.5327534, lng: -75.14},
+          zoom: 6
+        };
+        window.map = new google.maps.Map(document.getElementById('map-canvas'),
+          mapOptions);
+        // load sentiment data from server
+        map.data.loadGeoJson('data/sentiment.json');
+        map.data.addListener('click', function(event) {
+          map.data.overrideStyle(event.feature, {fillColor: 'red'});
+        });
+      }
+
+      /* converts a value in the range of 0 - 1 to an HSL color */
+      function temp_color(val){
+        val = val * 120
+        return 'hsl(' + val + ', 100%, 50%)';
+      }
+    
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+    <div id="map-options">
+      <select id="to_draw" onchange="colorize_geojson()">
+        <option value="polarity">Polarity</option>
+        <option value="subjectivity">Subjectivity</option>
+    </select>
+    </div>
+    <div id="map-canvas"></div>
+  </body>
+</html>

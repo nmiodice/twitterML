@@ -24,7 +24,7 @@ cluster ID of -1
 def cluster(x, features):
 	x_to_clus = x[:, features].astype(float)
 	# run DBSCAN clustering algorithm for fast clustering
-	db = DBSCAN(eps = 0.3, min_samples = 10).fit(x_to_clus)
+	db = DBSCAN(eps = .08, min_samples = 30).fit(x_to_clus)
 	labels = db.labels_
 	labels = labels.reshape(len(labels), 1)
 	x_clus = np.append(labels, x, axis = 1)
