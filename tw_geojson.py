@@ -50,6 +50,9 @@ class geojson_cluster:
 		if self.mAvgSubjectivity == None:
 			self.mAvgSubjectivity = sum(self.mSubjectivity)/len(self.mSubjectivity)
 		return self.mAvgSubjectivity
+		
+	def get_cluster_id(self):
+	    return self.mId
 
 
 """
@@ -63,6 +66,7 @@ def create_geojson(js_data, file = sys.stdout):
 		jsdict = {}
 		jsdict['type'] = 'Feature'
 		jsdict['properties'] = {}
+		jsdict['properties']['cluster_id'] = js.get_cluster_id()
 		jsdict['properties']['polarity'] = js.get_avg_polarity()
 		jsdict['properties']['subjectivity'] = js.get_avg_subjectivity()
 		jsdict['geometry'] = {}
@@ -91,6 +95,8 @@ def aggregate_matrix_data(x):
 	for i in range(n_clus + 1):
 		idxs = x[:, 0].A1 == i
 		d = x[idxs, :]
+		if len(d) == 0:
+			continue
 		json_data = geojson_cluster(i)
 		for row in d:
 			row = row.A1

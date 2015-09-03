@@ -1,0 +1,77 @@
+html, body, #map-canvas {
+	position : relative;
+	height   : 100%; 
+	margin   : 0;
+	padding  : 0;
+}
+
+#map-options {
+	position : absolute;
+	right    : 10px;
+	top      : 50px;
+	margin   : 0;
+	padding  : 0;
+	z-index  : 10
+}
+
+#overlay-back {
+    position   : absolute;
+    top        : 0;
+    left       : 0;
+    width      : 100%;
+    height     : 100%;
+    background : #000;
+    opacity    : 0.6;
+    filter     : alpha(opacity=60);
+    z-index    : 20;
+    display    : none;
+}
+
+#overlay {
+    position : absolute;
+    top      : 0;
+    left     : 0;
+    width    : 100%;
+    height   : 100%;
+    z-index  : 30;
+    display  : none;
+}
+
+#overlay-window {
+	position : relative;
+	margin   : 0 auto;
+    top      : 25%;
+    width    : 50%;
+    height   : 50%;
+    z-index  : 30;
+    background : #FFF;
+    border-radius: 10px;
+}
+
+.button-close {
+	position       : absolute;
+	padding        : 5px;
+	font-size      : 15px;
+	top            : 10px;
+	right          : 10px;
+	color          : #000;
+	text-align     : center;
+	vertical-align : middle;
+	font-family    : "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    border-radius  : 10px;
+    z-index        : 40;
+}
+
+#tweet-table {
+    height    : 100%;
+    width     : 100%;
+}
+
+#tweet-table-body {
+    margin   : 5%;
+    height    : 90%;
+    width     : 90%;
+    word-wrap : normal;
+    overflow  : auto;
+    display   : block;
+}

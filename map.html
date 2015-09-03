@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
+    <link rel="stylesheet" type="text/css" href="map.css">
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAw0e_FoeYsU00AS1QBNmhwa2k__QJWV0">
     </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="canvasLoader.js"></script>
     <script type="text/javascript">
 
       /* initializes a Google map */
@@ -46,15 +46,28 @@
           mapOptions);
         // load sentiment data from server
         map.data.loadGeoJson('data/sentiment.json');
-        map.data.addListener('click', function(event) {
-          map.data.overrideStyle(event.feature, {fillColor: 'red'});
-        });
       }
 
       /* converts a value in the range of 0 - 1 to an HSL color */
       function temp_color(val){
         val = val * 120
         return 'hsl(' + val + ', 100%, 50%)';
+      }
+
+      /* After a cluster file is loaded, this populates the table with that
+       * clusters data 
+       */
+      function clus_transfer_done() {
+        var table = document.getElementById('tweet-table-body');
+        var lines = this.responseText.split('\n');
+
+        for (var i = 0; i < lines.length; i++) {
+          var row = table.insertRow(i);
+          var cell = row.insertCell(0);
+          cell.innerHTML = lines[i];
+        }
+
+        window.load_anim.hide();
       }
     
       google.maps.event.addDomListener(window, 'load', initialize);
@@ -68,5 +81,18 @@
     </select>
     </div>
     <div id="map-canvas"></div>
+
+    <!-- Used for fading when a map element is clicked -->
+    <div id="overlay-back"></div> 
+    <div id="overlay">
+      <div id="overlay-window">
+        <div id="canvasloader-container"></div>
+        <button class="button-close" onClick="remove_cluster_tweets()">Return</button>
+        <table id="tweet-table">
+          <tbody id = "tweet-table-body"/>
+        </>
+      </div>
+    </div> 
+
   </body>
 </html>
