@@ -20,7 +20,7 @@ tweet_sentiment=$data$sep"tweet_sentiment.txt"
 tweet_json=$data$sep"sentiment.json"
 
 # parameters
-n_tweets=80000
+n_tweets=8000
 bbox="-122 36 -69 48"
 
 # generate output files
